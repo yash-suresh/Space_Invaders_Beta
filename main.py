@@ -88,9 +88,9 @@ while isGameRunning:
 
     enemyPosX += enemyChangeInX
     if enemyPosX >= 935:
-        enemyChangeInX = -0.3
+        enemyChangeInX = -0.1
     elif enemyPosX <= 0:
-        enemyChangeInX = 0.3
+        enemyChangeInX = 0.1
 
     enemy(enemyPosX, enemyPosY)
 
