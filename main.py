@@ -77,10 +77,10 @@ while isGameRunning:
     enemyPosX += enemyChangeInX
     if enemyPosX >= 935:
         enemyChangeInX = -0.1
-        enemyPosY += 0.2
+        enemyPosY += 40
     elif enemyPosX <= 0:
         enemyChangeInX = 0.1
-        enemyPosY += 0.2
+        enemyPosY += 40
 
 
     enemy(enemyPosX, enemyPosY)
