@@ -12,6 +12,7 @@ height = 1000
 width = 500
 gameScreen = pygame.display.set_mode((height, width))
 
+
 # player
 
 playerImage = pygame.image.load('spaceship.png')
@@ -61,10 +62,10 @@ while isGameRunning:
         # player movement
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                playerChangeInX = -0.1
+                playerChangeInX = -0.3
 
             if event.key == pygame.K_RIGHT:
-                playerChangeInX = 0.1
+                playerChangeInX = 0.3
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
