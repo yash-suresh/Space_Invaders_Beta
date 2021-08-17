@@ -23,8 +23,9 @@ playerPosY = 400
 
 enemyImage = pygame.image.load('aliens.png')
 enemyPosX = 450
-enemyChangeInX = 0.3
+enemyChangeInX = 0.1
 enemyPosY = 100
+enemyChangeInY = 0.1
 
 
 def player(x, y):
@@ -42,13 +43,7 @@ def playerBoundaryChecker(x):
         x = 935
     return x
 
-def enemyBoundaryChecker(x):
-    y = 0
-    if x <= 0:
-        y = 0.3
-    elif x >= 935:
-        y = -0.3
-    return y
+
 
 
 # game loop
@@ -63,8 +58,7 @@ while isGameRunning:
         if event.type == pygame.QUIT:
             isGameRunning = False
 
-
-        #player movement
+        # player movement
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 playerChangeInX = -0.1
@@ -76,21 +70,18 @@ while isGameRunning:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerChangeInX = 0.0
 
-
-
-
     playerPosX += playerChangeInX
     playerPosX = playerBoundaryChecker(playerPosX)
     player(playerPosX, playerPosY)
 
-    #enemyPosX += enemyChangeInX
-    #enemyChangeInX = enemyBoundaryChecker(enemyPosX)
-
     enemyPosX += enemyChangeInX
     if enemyPosX >= 935:
         enemyChangeInX = -0.1
+        enemyPosY += 0.2
     elif enemyPosX <= 0:
         enemyChangeInX = 0.1
+        enemyPosY += 0.2
+
 
     enemy(enemyPosX, enemyPosY)
 
