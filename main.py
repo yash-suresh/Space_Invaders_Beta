@@ -12,28 +12,26 @@ height = 1000
 width = 500
 gameScreen = pygame.display.set_mode((height, width))
 
-
 # player
-
 playerImage = pygame.image.load('spaceship.png')
 playerPosX = 450
 playerChangeInX = 0
 playerPosY = 400
 
 # enemy
-
 enemyImage = pygame.image.load('aliens.png')
 enemyPosX = 450
 enemyChangeInX = 0.1
 enemyPosY = 100
-enemyChangeInY = 0.1
+enemyChangeInY = 0.1  # the change when it enemy hits the wall
 
-
-#bullet
-bullet = pygame.image.load('bullet.png')
-bulletX = 0
-bulletY = 0
+# bullet
+bulletImage = pygame.image.load('bullet.png')
+bulletPosX = 0
+bulletPosY = 0
 bullet_state = "ready"
+bulletYChange = 0.5
+
 
 def player(x, y):
     gameScreen.blit(playerImage, (x, y))
@@ -42,11 +40,11 @@ def player(x, y):
 def enemy(x, y):
     gameScreen.blit(enemyImage, (x, y))
 
-def fire_bullet(x,y):
+
+def fire_bullet(x, y):
     global bullet_state
     bullet_state = "fire"
-
-
+    gameScreen.blit(bulletImage, (x + 16, y + 10))
 
 
 def playerBoundaryChecker(x):
@@ -55,8 +53,6 @@ def playerBoundaryChecker(x):
     elif x > 935:
         x = 935
     return x
-
-
 
 
 # game loop
@@ -79,6 +75,11 @@ while isGameRunning:
             if event.key == pygame.K_RIGHT:
                 playerChangeInX = 0.3
 
+            if event.key == pygame.K_SPACE:
+                bulletPosX = playerPosX
+                bulletPosY = playerPosY
+                fire_bullet(bulletPosX, bulletPosY)
+
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerChangeInX = 0.0
@@ -87,6 +88,13 @@ while isGameRunning:
     playerPosX = playerBoundaryChecker(playerPosX)
     player(playerPosX, playerPosY)
 
+    if bullet_state is "fire":
+        fire_bullet(bulletPosX, bulletPosY)
+        bulletPosY -= bulletYChange
+    if bulletPosY <= 0:
+        bullet_state = "ready"
+
+
     enemyPosX += enemyChangeInX
     if enemyPosX >= 935:
         enemyChangeInX = -0.1
@@ -94,7 +102,6 @@ while isGameRunning:
     elif enemyPosX <= 0:
         enemyChangeInX = 0.1
         enemyPosY += 40
-
 
     enemy(enemyPosX, enemyPosY)
 
