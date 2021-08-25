@@ -29,12 +29,24 @@ enemyPosY = 100
 enemyChangeInY = 0.1
 
 
+#bullet
+bullet = pygame.image.load('bullet.png')
+bulletX = 0
+bulletY = 0
+bullet_state = "ready"
+
 def player(x, y):
     gameScreen.blit(playerImage, (x, y))
 
 
 def enemy(x, y):
     gameScreen.blit(enemyImage, (x, y))
+
+def fire_bullet(x,y):
+    global bullet_state
+    bullet_state = "fire"
+
+
 
 
 def playerBoundaryChecker(x):
