@@ -29,8 +29,9 @@ enemyChangeInY = 0.1  # the change when it enemy hits the wall
 bulletImage = pygame.image.load('bullet.png')
 bulletPosX = 0
 bulletPosY = 0
-bullet_state = "ready"
 bulletYChange = 0.5
+global bullet_state
+bullet_state = "ready"
 
 
 def player(x, y):
@@ -44,7 +45,7 @@ def enemy(x, y):
 def fire_bullet(x, y):
     global bullet_state
     bullet_state = "fire"
-    gameScreen.blit(bulletImage, (x + 16, y + 10))
+    gameScreen.blit(bulletImage, (x + 23, y + 5))
 
 
 def playerBoundaryChecker(x):
@@ -75,7 +76,9 @@ while isGameRunning:
             if event.key == pygame.K_RIGHT:
                 playerChangeInX = 0.3
 
-            if event.key == pygame.K_SPACE:
+            #the bullet will only fire if the bullet state is ready, so we can't fire two or
+            #more in quick succession
+            if event.key == pygame.K_SPACE and bullet_state == "ready":
                 bulletPosX = playerPosX
                 bulletPosY = playerPosY
                 fire_bullet(bulletPosX, bulletPosY)
@@ -91,8 +94,10 @@ while isGameRunning:
     if bullet_state is "fire":
         fire_bullet(bulletPosX, bulletPosY)
         bulletPosY -= bulletYChange
-    if bulletPosY <= 0:
+    if bulletPosY <= 2:
         bullet_state = "ready"
+        #once the bullet crosses the boundary, we can change it back to ready,
+        #so no need to 'draw' again.
 
 
     enemyPosX += enemyChangeInX
